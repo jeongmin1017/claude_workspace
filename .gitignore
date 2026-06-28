@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# Sensitive files
+.env
+.env.local
+*.env
+*api_key*
+*secret*
+
+# Claude local settings
+.claude/settings.local.json
+
+# MCP config
+.mcp.json
+
+# Python
+__pycache__/
+*.pyc
+venv/
