@@ -51,7 +51,7 @@
 
 개발 모드에서 본인 계정을 조회하려면 그 계정이 **앱의 Instagram 테스터**로 등록돼 있어야 한다.
 
-1. 앱 대시보드 → **앱 역할(Roles) → Instagram 테스터**에 대상 계정(예: `@thinking.archive`) 추가
+1. 앱 대시보드 → **앱 역할(Roles) → Instagram 테스터**에 대상 계정(예: `@your_account`) 추가
 2. 인스타그램 앱에서 수락:
    **설정 → 앱 및 웹사이트 → 테스터 초대 → 수락**
 
@@ -93,7 +93,7 @@ cp .env.example .env
 IG_ACCESS_TOKEN=발급받은_60일_토큰
 
 # (선택) 멀티계정 — 7항 참고
-# IG_ACCESS_TOKEN_HAEUN=상대방이_공유한_토큰
+# IG_ACCESS_TOKEN_FRIEND=상대방이_공유한_토큰
 
 # (선택) 앱 대시보드 > 앱 설정 > 기본 설정 에서 확인
 IG_APP_ID=
@@ -117,7 +117,7 @@ IG_API_VERSION=v23.0
 .venv/bin/python fetch_insights.py --media 25
 
 # 다른 사람 계정 (멀티계정, 7항 참고)
-.venv/bin/python fetch_insights.py --account haeun --media 25
+.venv/bin/python fetch_insights.py --account friend --media 25
 ```
 
 결과는 계정별로 `output/<라벨>/` 에 분리 저장된다 (본인 = `default`, 지인 = 소문자 이름):
@@ -133,7 +133,7 @@ IG_API_VERSION=v23.0
 ```bash
 .venv/bin/python analyze.py                          # 가장 최근 조회 결과 분석
 .venv/bin/python analyze.py --keywords "투자,여행,일상"  # 키워드별 평균 성과까지
-.venv/bin/python analyze.py --account haeun           # 지인 계정 분석
+.venv/bin/python analyze.py --account friend           # 지인 계정 분석
 ```
 
 해당 계정의 최신 raw JSON을 읽어 **포맷별·월별 평균 성과 + 참여율 Top/Bottom 5 + (선택)키워드별 평균**을 `output/<라벨>/YYYYMMDD-HHMM-분석리포트.md` 로 저장한다. (먼저 `fetch_insights.py`를 그 계정으로 실행해야 함)
@@ -151,11 +151,11 @@ IG_API_VERSION=v23.0
 2. 받은 토큰을 `.env` 에 **`IG_ACCESS_TOKEN_<이름>`** 형식으로 추가
    ```bash
    IG_ACCESS_TOKEN=본인토큰
-   IG_ACCESS_TOKEN_HAEUN=하은님이_공유한_토큰
+   IG_ACCESS_TOKEN_FRIEND=지인이_공유한_토큰
    ```
 3. 실행 시 `--account <이름>` 으로 선택 (이름은 키의 `IG_ACCESS_TOKEN_` 뒤 부분, 대소문자 무관)
 
-> **대안**: 정민님 앱에 상대를 **Instagram 테스터로 등록** → 상대가 인스타에서 초대 수락 → `계정 추가`로 토큰 발급. 이 경우 상대의 인스타 로그인·동의가 필요하다.
+> **대안**: 본인 앱에 상대를 **Instagram 테스터로 등록** → 상대가 인스타에서 초대 수락 → `계정 추가`로 토큰 발급. 이 경우 상대의 인스타 로그인·동의가 필요하다.
 
 ### ✅ 왜 사업체·앱 심사 없이 되나
 
@@ -164,7 +164,7 @@ IG_API_VERSION=v23.0
 - ✅ **7항으로 충분한 경우**: 소수의 지인·스터디, 비상업적, **상대가 직접 토큰을 발급해 줄 수 있는** 관계.
 - ⚠️ **8항(Advanced Access)이 필요해지는 순간**: 클라이언트가 **"연결" 버튼 하나로** 온보딩되길 원할 때 / 상대가 **직접 앱 세팅을 못 하는** 비개발자일 때 / **상업적 대행 서비스**로 다수 계정을 자동 수집할 때.
 
-> 전제(마찰 지점): "앱 새로 만들 필요 없다"는 **정민님 기준**이다. **토큰 주는 사람은** 자기 Meta 개발자 앱이 필요(또는 정민님 앱에 테스터 등록). 계정마다 수작업 발급 → 소수엔 OK, 수십 개엔 부적합.
+> 전제(마찰 지점): "앱 새로 만들 필요 없다"는 **본인 기준**이다. **토큰 주는 사람은** 자기 Meta 개발자 앱이 필요(또는 본인 앱에 테스터 등록). 계정마다 수작업 발급 → 소수엔 OK, 수십 개엔 부적합.
 
 ### 🔒 공유 토큰의 조회 범위 (개인정보)
 
@@ -241,7 +241,7 @@ IG_API_VERSION=v23.0
 
 ```bash
 .venv/bin/python refresh_token.py                 # 본인(IG_ACCESS_TOKEN)
-.venv/bin/python refresh_token.py --account haeun  # 지인(IG_ACCESS_TOKEN_HAEUN)
+.venv/bin/python refresh_token.py --account friend  # 지인(IG_ACCESS_TOKEN_FRIEND)
 ```
 
 - `.env` 의 해당 키 라인만 새 토큰으로 교체한다.
@@ -310,7 +310,7 @@ IG_API_VERSION=v23.0
 ├── .venv/               ← 파이썬 가상환경
 └── output/              ← 조회 결과 (계정별 하위 폴더)
     ├── default/         ← 본인
-    └── haeun/           ← 지인 (예)
+    └── friend/           ← 지인 (예)
 ```
 
 ---
