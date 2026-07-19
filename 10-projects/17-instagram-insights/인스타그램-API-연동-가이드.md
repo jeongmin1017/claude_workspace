@@ -93,7 +93,7 @@ cp .env.example .env
 IG_ACCESS_TOKEN=발급받은_60일_토큰
 
 # (선택) 멀티계정 — 7항 참고
-# IG_ACCESS_TOKEN_FRIEND=상대방이_공유한_토큰
+# IG_ACCESS_TOKEN_SAMPLE=상대방이_공유한_토큰
 
 # (선택) 앱 대시보드 > 앱 설정 > 기본 설정 에서 확인
 IG_APP_ID=
@@ -117,7 +117,7 @@ IG_API_VERSION=v23.0
 .venv/bin/python fetch_insights.py --media 25
 
 # 다른 사람 계정 (멀티계정, 7항 참고)
-.venv/bin/python fetch_insights.py --account friend --media 25
+.venv/bin/python fetch_insights.py --account sample --media 25
 ```
 
 결과는 계정별로 `output/<라벨>/` 에 분리 저장된다 (본인 = `default`, 지인 = 소문자 이름):
@@ -133,7 +133,7 @@ IG_API_VERSION=v23.0
 ```bash
 .venv/bin/python analyze.py                          # 가장 최근 조회 결과 분석
 .venv/bin/python analyze.py --keywords "투자,여행,일상"  # 키워드별 평균 성과까지
-.venv/bin/python analyze.py --account friend           # 지인 계정 분석
+.venv/bin/python analyze.py --account sample           # 지인 계정 분석
 ```
 
 해당 계정의 최신 raw JSON을 읽어 **포맷별·월별 평균 성과 + 참여율 Top/Bottom 5 + (선택)키워드별 평균**을 `output/<라벨>/YYYYMMDD-HHMM-분석리포트.md` 로 저장한다. (먼저 `fetch_insights.py`를 그 계정으로 실행해야 함)
@@ -151,7 +151,7 @@ IG_API_VERSION=v23.0
 2. 받은 토큰을 `.env` 에 **`IG_ACCESS_TOKEN_<이름>`** 형식으로 추가
    ```bash
    IG_ACCESS_TOKEN=본인토큰
-   IG_ACCESS_TOKEN_FRIEND=지인이_공유한_토큰
+   IG_ACCESS_TOKEN_SAMPLE=지인이_공유한_토큰
    ```
 3. 실행 시 `--account <이름>` 으로 선택 (이름은 키의 `IG_ACCESS_TOKEN_` 뒤 부분, 대소문자 무관)
 
@@ -241,7 +241,7 @@ IG_API_VERSION=v23.0
 
 ```bash
 .venv/bin/python refresh_token.py                 # 본인(IG_ACCESS_TOKEN)
-.venv/bin/python refresh_token.py --account friend  # 지인(IG_ACCESS_TOKEN_FRIEND)
+.venv/bin/python refresh_token.py --account sample  # 지인(IG_ACCESS_TOKEN_SAMPLE)
 ```
 
 - `.env` 의 해당 키 라인만 새 토큰으로 교체한다.
@@ -310,7 +310,7 @@ IG_API_VERSION=v23.0
 ├── .venv/               ← 파이썬 가상환경
 └── output/              ← 조회 결과 (계정별 하위 폴더)
     ├── default/         ← 본인
-    └── friend/           ← 지인 (예)
+    └── sample/           ← 지인 (예)
 ```
 
 ---
